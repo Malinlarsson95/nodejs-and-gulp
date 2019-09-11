@@ -1,0 +1,19 @@
+{
+  "name": "grundstruktur-webbplats",
+  "version": "1.0.0",
+  "description": "En grundstruktur att använda när man startar nytt projekt av webbplats",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Malin Larsson",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-cssnano": "^2.1.3",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-imagemin": "^6.1.0",
+    "gulp-uglify-es": "^1.0.4"
+  }
+}

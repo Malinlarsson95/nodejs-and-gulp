@@ -1,0 +1,1 @@
+console.log("Hej från one.js");
