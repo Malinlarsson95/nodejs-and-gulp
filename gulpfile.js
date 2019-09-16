@@ -4,6 +4,7 @@ const uglifyEs = require("gulp-uglify-es").default;
 const cssnano = require('gulp-cssnano');
 const imagemin = require('gulp-imagemin');
 const htmlmin = require("gulp-htmlmin");
+const browserSync = require('browser-sync').create()
 
 // Sökvägar till filerna
 const files = {
@@ -19,7 +20,8 @@ const files = {
 function copyHTML() {
     return src(files.htmlPath)
         .pipe(htmlmin({ collapseWhitespace: true}))
-        .pipe(dest("pub"));
+        .pipe(dest("pub"))
+        .pipe(browserSync.stream());
 }
 
 // Task: Sammanslå js-filer och minifierar och lägger till i pub/js.
@@ -27,28 +29,38 @@ function jsTask() {
     return src(files.jsPath)
         .pipe(concat("main.js"))
         .pipe(uglifyEs())
-        .pipe(dest("pub/js"));
+        .pipe(dest("pub/js"))
+        .pipe(browserSync.stream());
 }
 // Task: Sammanslå css-filer och minifierar och lägger till i pub/css.
 function cssTask() {
     return src(files.cssPath)
     .pipe(concat("main.css"))
     .pipe(cssnano())
-    .pipe(dest("pub/css"));
+    .pipe(dest("pub/css"))
+    .pipe(browserSync.stream());
 }
 // Task: Komprimerar alla filer från "image", ska då vara bildfiler, och sparar dessa i pub/images.
 function imageTask() {
     return src(files.imagePath)
         .pipe(imagemin())
-        .pipe(dest("pub/images"));
+        .pipe(dest("pub/images"))
+        .pipe(browserSync.stream());
 }
 
 // task: watcher
 function watchTask() {
+    browserSync.init({
+        server: {
+            baseDir: 'pub/'
+        }
+    });
+    //Kollar om någon fil i sökvägarna ändrats, kör då funktioner för att kopiera och sammanslå filerna.
     watch([files.htmlPath, files.jsPath, files.cssPath, files.imagePath],
-        parallel(copyHTML, jsTask, cssTask, imageTask));
+        parallel(copyHTML, jsTask, cssTask, imageTask)).on("change", browserSync.reload);
 }
 
+// Gör gulp
 exports.default = series(
     parallel(copyHTML, jsTask, cssTask, imageTask),
     watchTask);
