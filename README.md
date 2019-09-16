@@ -4,7 +4,7 @@ Gulp är ett program som bygger på Node.js, det är ett program som man använd
 Syftet är att med Gulp kunna skapa olika processer så som att komprimera filer, slå ihop filer och så vidare. Något som annars skulle ta väldigt
 lång tid om man skulle behöva göra det manuellt.
 
-# H3 De tasks jag skapat, vad de gör och vilka paket jag använd:
+### De tasks jag skapat, vad de gör och vilka paket jag använd:
 * HTML-task:
 Tar HTML-filerna i mappen "src" och minifierar dessa, alltså tar bort alla mellanrum, kommentarer och så vidare för att göra filen så liten som möjligt. Skickar sedan dessa vidare till "pub"-mappen.  
 Paketen som används är "gulp htmlmin" för att minifiera HTML-filerna, den verkade väldigt enkel och var ganska populär, vilket brukar vara ett bra tecken.
@@ -22,9 +22,9 @@ Det paket jag använd heter "gulp-imagemin" och jag använder den dels för att 
 För att man enkelt ska kunna sitta och utveckla sin sida utan att behöva ladda om sin webbbläsare för varje ändring man gör i någon fil har jag lagt in en live-reload. Jag försökte först med paketet "gulp-livereload" men fick det inte att funka. Efter tips av Mattias provade jag programmet "browser-sync" vilket gjorde att det funkade. 
 Browser-sync känner då av när någon av filerna i "pub" mappen har ändrats och uppdaterar då webbläsaren automatiskt.
 
-# H3 Systemet:
+### Systemet:
 Systemet jag då har skapat innehåller en grundstruktur på en HTML-fil som man enkelt kan dublicera om man behöver fler HTMl-filer. I HTML-filen finns sökvägen för CSS-filen och JS-filen som ligger i "pub"-mappen.
 Alltså för att se ändringar du gör i CSS och JavaScript måste du använda HTML-filerna i "pub"-mappen, alltså mappen för publicering. Så du arbetar med filerna i "Src"-mappen och kollar på resultatet i "pub"-mappen.
-För att starta upp systemet skriver du "npm install" i terminalen_(obs du måste ha Node.js installerat)_ när du befinner dig i mappen som innehåller filen som heter "package.json". Då installeras alla packet jag använd och även Gulp.
+För att starta upp systemet skriver du "npm install" i terminalen(_obs du måste ha Node.js installerat_) när du befinner dig i mappen som innehåller filen som heter "package.json". Då installeras alla packet jag använd och även Gulp.
 
 För att starta gulp skriver du "gulp" i terminalen när du står i samma mapp som innan. Sen är du redo, alla ändringar du gör i antingen HTML, CSS, JS eller bidlfiler kommer att behandlas och läggas i "pub"-mappen automatiskt. Var noga med att placera filerna på rätt ställe i "src"-mappen.
