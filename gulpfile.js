@@ -5,13 +5,17 @@ const cssnano = require('gulp-cssnano');
 const imagemin = require('gulp-imagemin');
 const htmlmin = require("gulp-htmlmin");
 const browserSync = require('browser-sync').create()
+const sass = require('gulp-sass'); 
+sass.compiler = require('node-sass');
+const sourcemaps = require("gulp-sourcemaps");
 
 // Sökvägar till filerna
 const files = {
     htmlPath: "src/**/*.html",
     jsPath: "src/**/*.js",
     cssPath: "src/**/*.css",
-    imagePath: "src/images/*"
+    imagePath: "src/images/*",
+    sassPath: "src/sass/*.scss"
 }
 
 /*======Olika tasks=====*/
@@ -40,6 +44,14 @@ function cssTask() {
     .pipe(dest("pub/css"))
     .pipe(browserSync.stream());
 }
+// Task: SASS
+function sassTask() {
+    return src(files.sassPath)
+    .pipe(sourcemaps.init())
+    .pipe(sass({outputStyle: 'compressed'}).on("error", sass.logError))
+    .pipe(dest("pub/css"))
+    .pipe(browserSync.stream());
+}
 // Task: Komprimerar alla filer från "image", ska då vara bildfiler, och sparar dessa i pub/images.
 function imageTask() {
     return src(files.imagePath)
@@ -56,11 +68,11 @@ function watchTask() {
         }
     });
     //Kollar om någon fil i sökvägarna ändrats, kör då funktioner för att kopiera och sammanslå filerna.
-    watch([files.htmlPath, files.jsPath, files.cssPath, files.imagePath],
-        parallel(copyHTML, jsTask, cssTask, imageTask)).on("change", browserSync.reload);
+    watch([files.htmlPath, files.jsPath, files.cssPath, files.sassPath, files.imagePath],
+        parallel(copyHTML, jsTask, cssTask, sassTask, imageTask)).on("change", browserSync.reload);
 }
 
 // Gör gulp
 exports.default = series(
-    parallel(copyHTML, jsTask, cssTask, imageTask),
+    parallel(copyHTML, jsTask, cssTask, sassTask, imageTask),
     watchTask);

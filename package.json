@@ -16,6 +16,9 @@
     "gulp-htmlmin": "^5.0.1",
     "gulp-imagemin": "^6.1.0",
     "gulp-livereload": "^4.0.1",
-    "gulp-uglify-es": "^1.0.4"
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify-es": "^1.0.4",
+    "node-sass": "^4.12.0"
   }
 }
