@@ -14,14 +14,15 @@ Paketen som används är "gulp-concat" som slår ihop alla filerna med varandra,
 * **CSS-task:**
 Exakt samma sak sker med dessa filer som för js-filerna fast css-filerna hittas i "src/css" och slutgiltiga filen läggs istället i "pub/css" och heter "main.css.  
 Paketen som används är även där "gulp-concat" för att slå ihop filerna. För att minifiera CSS-filen används paketet "gulp-cssnano" för att den var väldigt simpel och många nedladdningar.
-* **Image task:**
+* **Image-task:**
 Jag gjorde ett försök att automatisera komprimering av olika bildfiler, det går säkert att lägga till någon inställning för att komprimera mer men har enbart använt standard inställningarna. Bild-filerna tas från mappen "src/images", här tas **alla** filer som ligger i den mappen, så här ska det enbart läggas JPG, SVG, GIF eller PNG filer.
 Filerna hämtas då in, komprimeras och skickas till "pub/images".  
 Det paket jag använd heter "gulp-imagemin" och jag använder den dels för att den kom högt upp när jag sökte efter bildomptimerings verktyg men också för att den verkade enkel.
 
 För att man enkelt ska kunna sitta och utveckla sin sida utan att behöva ladda om sin webbbläsare för varje ändring man gör i någon fil har jag lagt in en live-reload. Jag försökte först med paketet "gulp-livereload" men fick det inte att funka. Efter tips av Mattias provade jag programmet "browser-sync" vilket gjorde att det funkade. 
 Browser-sync känner då av när någon av filerna i "pub" mappen har ändrats och uppdaterar då webbläsaren automatiskt.
-
+* **SASS-task**
+Gör om scss-kod till css kod och lägger det i CSS-mappen i pub. Minifierar även koden. 
 ### Systemet:
 Systemet jag då har skapat innehåller en grundstruktur på en HTML-fil som man enkelt kan dublicera om man behöver fler HTMl-filer. I HTML-filen finns sökvägen för CSS-filen och JS-filen som ligger i "pub"-mappen.
 Alltså för att se ändringar du gör i CSS och JavaScript måste du använda HTML-filerna i "pub"-mappen, alltså mappen för publicering. Så du arbetar med filerna i "Src"-mappen och kollar på resultatet i "pub"-mappen.
