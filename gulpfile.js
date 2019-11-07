@@ -8,6 +8,8 @@ const browserSync = require('browser-sync').create()
 const sass = require('gulp-sass'); 
 sass.compiler = require('node-sass');
 const sourcemaps = require("gulp-sourcemaps");
+const gulp = require("gulp");
+const babel = require("gulp-babel");
 
 // Sökvägar till filerna
 const files = {
@@ -28,29 +30,31 @@ function copyHTML() {
         .pipe(browserSync.stream());
 }
 
-// Task: Sammanslå js-filer och minifierar och lägger till i pub/js.
+// Task: Sammanslå js-filer och minifierar och lägger till i pub/js. Js-filerna görs även om till ES5.
 function jsTask() {
     return src(files.jsPath)
+        .pipe(sourcemaps.init())
+        .pipe(babel())
         .pipe(concat("main.js"))
-        .pipe(uglifyEs())
+        .pipe(sourcemaps.write("."))
         .pipe(dest("pub/js"))
         .pipe(browserSync.stream());
 }
 // Task: Sammanslå css-filer och minifierar och lägger till i pub/css.
 function cssTask() {
     return src(files.cssPath)
-    .pipe(concat("main.css"))
-    .pipe(cssnano())
-    .pipe(dest("pub/css"))
-    .pipe(browserSync.stream());
+        .pipe(concat("main.css"))
+        .pipe(cssnano())
+        .pipe(dest("pub/css"))
+        .pipe(browserSync.stream());
 }
 // Task: SASS
 function sassTask() {
     return src(files.sassPath)
-    .pipe(sourcemaps.init())
-    .pipe(sass({outputStyle: 'compressed'}).on("error", sass.logError))
-    .pipe(dest("pub/css"))
-    .pipe(browserSync.stream());
+        .pipe(sourcemaps.init())
+        .pipe(sass({outputStyle: 'compressed'}).on("error", sass.logError))
+        .pipe(dest("pub/css"))
+        .pipe(browserSync.stream());
 }
 // Task: Komprimerar alla filer från "image", ska då vara bildfiler, och sparar dessa i pub/images.
 function imageTask() {
