@@ -1,7 +1,6 @@
 const {src, dest, watch, series, parallel} = require("gulp");
 const concat = require("gulp-concat");
 const uglifyEs = require("gulp-uglify-es").default;
-const cssnano = require('gulp-cssnano');
 const imagemin = require('gulp-imagemin');
 const htmlmin = require("gulp-htmlmin");
 const browserSync = require('browser-sync').create()
@@ -44,7 +43,6 @@ function jsTask() {
 function cssTask() {
     return src(files.cssPath)
         .pipe(concat("main.css"))
-        .pipe(cssnano())
         .pipe(dest("pub/css"))
         .pipe(browserSync.stream());
 }
